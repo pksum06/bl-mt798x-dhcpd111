@@ -2,7 +2,7 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 #
-name: FIP-build
+name: FIP Build
 
 on:
   repository_dispatch:
@@ -318,7 +318,7 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         echo "GEN_BL2=1" >> $GITHUB_ENV
 
-    - name: 应用 BL2 超频补丁
+    - name: 应用 mt7981 BL2 超频补丁
       if: github.event.inputs.OC_BL2 == 'true' && !cancelled()
       run: |
         cd bl-mt798x-dhcpd
@@ -447,7 +447,7 @@ jobs:
         # 重命名 OC_BL2
         if [ "${{ env.OC_BL2 }}" = "1" ]; then
           for file in output/*; do
-            if [[ "$file" == *"bl2.bin"* ]]; then
+            if [[ "$file" == *"mt7981"* && "$file" == *"bl2.bin"* ]]; then
               mv "$file" "${file%.bin}_oc1.6GHz.bin"
             fi
           done
